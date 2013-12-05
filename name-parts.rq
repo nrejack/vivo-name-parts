@@ -1,1 +1,13 @@
-name-parts.rq
+PREFIX ufVivo: <http://vivo.ufl.edu/ontology/vivo-ufl/>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+# Find all the UF people in VIVO who have a display name, but do
+# not have a last name
+SELECT ?uri ?display_name
+WHERE {
+  ?uri a ufVivo:UFEntity .
+  ?uri a foaf:Person .
+  ?uri rdfs:label ?display_name .
+  FILTER NOT EXISTS {?uri foaf:lastName ?last_name . }
+}
